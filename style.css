@@ -1,211 +1,180 @@
-* { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #171717;
-      color: #fff;
-      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-    }
-
-    /* 電腦版：維持手機長條比例，左右留背景 */
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #game {
-      position: relative;
-      width: min(100vw, 430px);
-      height: min(100vh, 932px);
-      aspect-ratio: 430 / 932;
-      overflow: hidden;
-      background: #111;
-      isolation: isolate;
-    }
-
-    @media (min-width: 431px) {
-      #game {
-        height: min(100vh, calc(100vw * 932 / 430));
-        width: min(430px, calc(100vh * 430 / 932));
-        border-radius: 8px;
-        box-shadow: 0 0 35px rgba(0,0,0,.45);
-      }
-    }
-
-    /* ---------- 共用 ---------- */
-    .scene {
-      position: absolute;
-      inset: 0;
-      display: none;
-    }
-    .scene.active { display: block; }
-
-    button {
-      font: inherit;
-      color: inherit;
-      border: 0;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ---------- 劇情場景 ---------- */
-    .story-scene {
-      background:
-        linear-gradient(to bottom, rgba(0,0,0,.05) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.88) 100%),
-        url("assets/story-bg.svg") center / cover no-repeat;
-    }
-
-    .story-top {
-      position: absolute;
-      left: 20px;
-      right: 20px;
-      top: 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 3;
-    }
-
-    .chapter {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.45);
-      font-size: 12px;
-      letter-spacing: .08em;
-    }
-
-    .skip {
-      background: rgba(0,0,0,.45);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-    }
-
-    .story-box {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 18px;
-      z-index: 3;
-    }
-
-    .speaker {
-      display: inline-block;
-      margin-bottom: 8px;
-      padding: 5px 12px;
-      border-radius: 5px;
-      background: rgba(30,30,30,.9);
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .dialogue {
-      min-height: 96px;
-      padding: 15px 16px;
-      border: 1px solid rgba(255,255,255,.22);
-      border-radius: 10px;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(5px);
-      line-height: 1.8;
-      font-size: 16px;
-    }
-
-    .next {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
-      border-radius: 8px;
-      background: rgba(255,255,255,.13);
-      border: 1px solid rgba(255,255,255,.28);
-    }
-
-    /* ---------- 選項場景 ---------- */
-    .choice-scene {
-      background: #171717;
-      padding: 24px 18px;
-      display: none;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .choice-scene.active { display: flex; }
-
-    .choice-title {
-      margin-bottom: 18px;
-      font-size: 19px;
-      line-height: 1.6;
-    }
-
-    .choices {
-      display: grid;
-      gap: 10px;
-      padding-bottom: 8px;
-    }
-
-    .choice {
-      width: 100%;
-      padding: 15px 16px;
-      text-align: left;
-      border-radius: 10px;
-      background: #292929;
-      border: 1px solid #4a4a4a;
-      line-height: 1.5;
-      transition: transform .12s, background .12s;
-    }
-
-    .choice:active {
-      transform: scale(.98);
-      background: #3a3a3a;
-    }
-
-    /* ---------- 全螢幕 CG ---------- */
-    .cg-scene {
-      background: #000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-    }
-    .cg-scene.active { display: flex; }
-
-    .cg-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .cg-hint {
-      position: absolute;
-      right: 15px;
-      bottom: 15px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.5);
-      color: rgba(255,255,255,.8);
-      font-size: 12px;
-      pointer-events: none;
-    }
-
-    /* ---------- 結局 ---------- */
-    .ending-scene {
-      background: linear-gradient(#171717, #050505);
-      padding: 30px 24px;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-    .ending-scene.active { display: flex; }
-    .ending-inner h1 { font-size: 28px; margin-bottom: 12px; }
-    .ending-inner p { line-height: 1.8; color: #ccc; }
-    .restart {
-      margin-top: 22px;
-      padding: 12px 28px;
-      border-radius: 8px;
-      background: #fff;
-      color: #111;
-    }
+* {
+	box-sizing: border-box
+}
+html,body {
+	margin: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: #151515;
+	color: #fff;
+	font-family: "Noto Sans TC","Microsoft JhengHei",sans-serif
+}
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center
+}
+#game {
+	position: relative;
+	width: min(100vw,430px);
+	height: min(100vh,932px);
+	aspect-ratio: 430/932;
+	overflow: hidden;
+	background: #111
+}
+@media(min-width: 431px) {
+	#game {
+	width: min(430px,calc(100vh * 430 / 932));
+	height: min(932px,calc(100vw * 932 / 430));
+	border-radius: 8px;
+	box-shadow: 0 0 40px #000
+}
+}button {
+	font: inherit;
+	color: inherit;
+	border: 0;
+	cursor: pointer
+}
+button: disabled {
+	opacity: .4
+}
+.screen {
+	position: absolute;
+	inset: 0
+}
+.story {
+	background-size: cover;
+	background-position: center
+}
+.story: after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to bottom,transparent 35%,rgba(0,0,0,.9)
+}
+.top {
+	position: absolute;
+	z-index: 2;
+	top: 16px;
+	left: 16px;
+	right: 16px
+}
+.pill {
+	padding: 6px 10px;
+	border-radius: 99px;
+	background: #0009;
+	font-size: 12px
+}
+.box {
+	position: absolute;
+	z-index: 2;
+	left: 16px;
+	right: 16px;
+	bottom: 16px
+}
+.speaker {
+	display: inline-block;
+	padding: 5px 12px;
+	background: #191919f2;
+	border-radius: 5px;
+	font-weight: bold
+}
+.text {
+	min-height: 90px;
+	margin-top: 7px;
+	padding: 14px 15px;
+	border: 1px solid #fff3;
+	border-radius: 10px;
+	background: #000b;
+	line-height: 1.8
+}
+.next,.choice {
+	width: 100%;
+	margin-top: 9px;
+	padding: 13px 15px;
+	border-radius: 9px;
+	background: #ffffff22;
+	border: 1px solid #fff4;
+	text-align: left
+}
+.next {
+	text-align: center
+}
+.choiceScreen {
+	padding: 22px 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	background: #171717
+}
+.choiceTitle {
+	margin-bottom: 14px;
+	font-size: 19px;
+	line-height: 1.65
+}
+.choices {
+	display: grid;
+	gap: 2px
+}
+.cg {
+	background: #000
+}
+.cg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
+}
+.hint {
+	position: absolute;
+	right: 14px;
+	bottom: 14px;
+	padding: 7px 10px;
+	border-radius: 99px;
+	background: #0009;
+	font-size: 12px
+}
+.ending {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	padding: 26px;
+	background: linear-gradient(#191919,#050505)
+}
+.ending p {
+	white-space: pre-line;
+	line-height: 1.8;
+	color: #ccc
+}
+.restart {
+	margin-top: 20px;
+	padding: 12px 28px;
+	border-radius: 8px;
+	background: #fff;
+	color: #111
+}
+.error {
+	padding: 30px;
+	background: #120c0c
+}
+.error code {
+	display: block;
+	margin-top: 10px;
+	padding: 10px;
+	background: #000;
+	color: #ffb4b4;
+	white-space: pre-wrap
+}
+#debug {
+	position: absolute;
+	z-index: 10;
+	top: 55px;
+	left: 8px;
+	right: 8px;
+	padding: 7px;
+	background: #000b;
+	border-radius: 6px;
+	font-size: 11px;
+	pointer-events: none
+}
