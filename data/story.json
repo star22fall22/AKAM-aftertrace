@@ -1,0 +1,186 @@
+{
+  "game": {
+    "title": "手機劇情 RPG 範例",
+    "version": "1.0"
+  },
+  "settings": {
+    "start": "intro",
+    "debug": true
+  },
+  "initialState": {
+    "好感度": 0,
+    "勇氣": 0,
+    "金錢": 100,
+    "是否取得鑰匙": 0
+  },
+  "nodes": {
+    "intro": {
+      "type": "story",
+      "chapter": "CHAPTER 01",
+      "background": "assets/bg/story-bg.svg",
+      "speaker": "旁白",
+      "text": "夜幕降臨，城市的燈光一盞一盞亮起。\n你站在陌生的街道上，不知道接下來該往哪裡走。",
+      "next": "meet"
+    },
+    "meet": {
+      "type": "choice",
+      "background": "assets/bg/story-bg-2.svg",
+      "text": "你注意到前方有一個人影，你決定……",
+      "options": [
+        {
+          "text": "主動上前打招呼",
+          "effects": [
+            {
+              "variable": "好感度",
+              "operation": "add",
+              "value": 2
+            }
+          ],
+          "next": "talk"
+        },
+        {
+          "text": "保持距離觀察",
+          "effects": [
+            {
+              "variable": "好感度",
+              "operation": "add",
+              "value": 1
+            }
+          ],
+          "next": "observe"
+        },
+        {
+          "text": "直接離開",
+          "effects": [
+            {
+              "variable": "好感度",
+              "operation": "subtract",
+              "value": 1
+            },
+            {
+              "variable": "勇氣",
+              "operation": "add",
+              "value": 1
+            }
+          ],
+          "next": "leave"
+        }
+      ]
+    },
+    "talk": {
+      "type": "story",
+      "background": "assets/bg/story-bg-2.svg",
+      "speaker": "神秘人物",
+      "text": "「你……也是來找那個東西的嗎？」",
+      "next": "key"
+    },
+    "observe": {
+      "type": "story",
+      "background": "assets/bg/story-bg-3.svg",
+      "speaker": "旁白",
+      "text": "你先觀察四周。她似乎因此多了一分戒心。",
+      "next": "key"
+    },
+    "leave": {
+      "type": "story",
+      "background": "assets/bg/story-bg-3.svg",
+      "speaker": "旁白",
+      "text": "你轉身離開，但身後似乎傳來一聲輕笑。",
+      "next": "key"
+    },
+    "key": {
+      "type": "choice",
+      "text": "地上出現了一把古老的鑰匙，你會……",
+      "options": [
+        {
+          "text": "把鑰匙交給她",
+          "effects": [
+            {
+              "variable": "好感度",
+              "operation": "add",
+              "value": 3
+            }
+          ],
+          "next": "check"
+        },
+        {
+          "text": "自己收下鑰匙",
+          "effects": [
+            {
+              "variable": "好感度",
+              "operation": "subtract",
+              "value": 2
+            },
+            {
+              "variable": "是否取得鑰匙",
+              "operation": "set",
+              "value": 1
+            }
+          ],
+          "next": "check"
+        }
+      ]
+    },
+    "check": {
+      "type": "story",
+      "background": "assets/bg/story-bg.svg",
+      "speaker": "旁白",
+      "text": "你們來到了封閉的門前。\n真正的選擇即將開始……",
+      "next": {
+        "conditions": [
+          {
+            "if": {
+              "variable": "好感度",
+              "operator": ">=",
+              "value": 4
+            },
+            "go": "high"
+          },
+          {
+            "if": {
+              "variable": "好感度",
+              "operator": "<=",
+              "value": -1
+            },
+            "go": "low"
+          }
+        ],
+        "default": "normal"
+      }
+    },
+    "high": {
+      "type": "cg",
+      "image": "assets/cg/cg-01.svg",
+      "next": "good"
+    },
+    "normal": {
+      "type": "story",
+      "background": "assets/bg/story-bg-2.svg",
+      "speaker": "神秘人物",
+      "text": "「我還不知道能不能完全相信你。」",
+      "next": "normalEnd"
+    },
+    "low": {
+      "type": "story",
+      "background": "assets/bg/story-bg-3.svg",
+      "speaker": "神秘人物",
+      "text": "「我果然不應該相信你。」",
+      "next": "badEnd"
+    },
+    "good": {
+      "type": "ending",
+      "title": "特別結局・信任",
+      "text": "你們建立了足夠的信任。"
+    },
+    "normalEnd": {
+      "type": "ending",
+      "title": "普通結局",
+      "text": "你們仍然繼續同行。"
+    },
+    "badEnd": {
+      "type": "ending",
+      "title": "分歧結局・離去",
+      "text": "彼此失去了信任。"
+    }
+  }
+}
