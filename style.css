@@ -16,19 +16,35 @@ body {
 	align-items: center
 }
 #game {
-	position: relative;
-	width: min(100vw,430px);
-	height: min(100vh,932px);
-	aspect-ratio: 430/932;
-	overflow: hidden;
-	background: #111
+  position: relative;
+  width: min(100vw, 430px);
+  height: min(100dvh, 932px);
+  aspect-ratio: 430 / 932;
+  overflow: hidden;
+  background: #111;
 }
-@media(min-width: 431px) {
-	#game {
-	width: min(430px,calc(100vh * 430 / 932));
-	height: min(932px,calc(100vw * 932 / 430));
-	border-radius: 8px;
-	box-shadow: 0 0 40px #000
+
+@media (max-height: 750px) {
+  .box {
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  .text {
+    min-height: 70px;
+    max-height: 24vh;
+    padding: 10px 12px;
+    line-height: 1.6;
+  }
+
+  .next,
+  .choice {
+    margin-top: 6px;
+    padding: 10px 12px;
+  }
+
+  .speaker {
+    padding: 4px 10px;
+  }
 }
 }button {
 	font: inherit;
@@ -71,12 +87,12 @@ button: disabled {
 	background: #0009;
 	font-size: 12px
 }
-.box{
-  position:absolute;
-  z-index:2;
-  left:16px;
-  right:16px;
-  bottom:16px;
+.box {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom));
 }
 .speaker {
 	display: inline-block;
@@ -86,13 +102,15 @@ button: disabled {
 	font-weight: bold
 }
 .text {
-	min-height: 90px;
-	margin-top: 7px;
-	padding: 14px 15px;
-	border: 1px solid #fff3;
-	border-radius: 10px;
-	background: #000b;
-	line-height: 1.8
+  min-height: 90px;
+  max-height: 28vh;
+  overflow-y: auto;
+  margin-top: 7px;
+  padding: 14px 15px;
+  border: 1px solid #fff3;
+  border-radius: 10px;
+  background: #000b;
+  line-height: 1.8;
 }
 .next,.choice {
 	width: 100%;
