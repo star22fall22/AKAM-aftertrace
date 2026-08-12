@@ -47,18 +47,23 @@ button: disabled {
 	background-size: cover;
 	background-position: center
 }
-.story: after {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(to bottom,transparent 35%,rgba(0,0,0,.9)
+.story:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    transparent 35%,
+    rgba(0,0,0,.9)
+  );
+  pointer-events:none;
 }
-.top {
-	position: absolute;
-	z-index: 2;
-	top: 16px;
-	left: 16px;
-	right: 16px
+.top{
+  position:absolute;
+  z-index:2;
+  top:16px;
+  left:16px;
+  right:16px;
 }
 .pill {
 	padding: 6px 10px;
@@ -66,12 +71,12 @@ button: disabled {
 	background: #0009;
 	font-size: 12px
 }
-.box {
-	position: absolute;
-	z-index: 2;
-	left: 16px;
-	right: 16px;
-	bottom: 16px
+.box{
+  position:absolute;
+  z-index:2;
+  left:16px;
+  right:16px;
+  bottom:16px;
 }
 .speaker {
 	display: inline-block;
@@ -177,4 +182,15 @@ button: disabled {
 	border-radius: 6px;
 	font-size: 11px;
 	pointer-events: none
+}
+
+.story > *{
+  position:relative;
+  z-index:1;
+}
+
+.story .top,
+.story .box{
+  position:absolute;
+  z-index:2;
 }
