@@ -1,21 +1,24 @@
 * {
-	box-sizing: border-box
-}
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  min-height:100%;
-  overflow:hidden;
-  background:#151515;
-  color:#fff;
-  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  box-sizing: border-box;
 }
 
-body{
-  display:flex;
-  justify-content:center;
-  align-items:center;
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background: #151515;
+  color: #fff;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   padding:
     env(safe-area-inset-top)
     env(safe-area-inset-right)
@@ -23,258 +26,556 @@ body{
     env(safe-area-inset-left);
 }
 
-#game{
-  position:relative;
-  width:min(100vw,430px);
-  height:min(
-    calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom)),
+/* =========================================================
+   遊戲主畫面
+   ========================================================= */
+
+#game {
+  position: relative;
+
+  width: min(100vw, 430px);
+
+  /*
+   * 使用 dvh，避免手機瀏覽器網址列造成高度計算錯誤
+   */
+  height: min(
+    calc(
+      100dvh -
+      env(safe-area-inset-top) -
+      env(safe-area-inset-bottom)
+    ),
     932px
   );
-  max-height:100dvh;
-  aspect-ratio:430/932;
-  overflow:hidden;
-  background:#111;
+
+  max-height: 100dvh;
+
+  aspect-ratio: 430 / 932;
+
+  overflow: hidden;
+
+  background: #111;
 }
 
-@media(min-width: 431px) {
-	#game {
-	width: min(430px,calc(100vh * 430 / 932));
-	height: min(932px,calc(100vw * 932 / 430));
-	border-radius: 8px;
-	box-shadow: 0 0 40px #000
+/* 桌面版 */
+@media (min-width: 431px) {
+  #game {
+    width: min(430px, calc(100vh * 430 / 932));
+    height: min(932px, calc(100vw * 932 / 430));
+
+    border-radius: 8px;
+    box-shadow: 0 0 40px #000;
+  }
 }
-}button {
-	font: inherit;
-	color: inherit;
-	border: 0;
-	cursor: pointer
+
+/* =========================================================
+   基本按鈕
+   ========================================================= */
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  cursor: pointer;
 }
-button: disabled {
-	opacity: .4
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
 }
+
+/* =========================================================
+   Screen
+   ========================================================= */
+
 .screen {
-	position: absolute;
-	inset: 0
+  position: absolute;
+  inset: 0;
 }
+
+/* =========================================================
+   Story
+   ========================================================= */
+
 .story {
-	background-size: cover;
-	background-position: center
+  background-size: cover;
+  background-position: center;
 }
-.story:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
+
+.story::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(
     to bottom,
     transparent 35%,
-    rgba(0,0,0,.9)
+    rgba(0, 0, 0, 0.9)
   );
-  pointer-events:none;
+
+  pointer-events: none;
 }
-.top{
-  position:absolute;
-  z-index:2;
-  top:max(12px,env(safe-area-inset-top));
-  left:16px;
-  right:16px;
-  padding-top:2px;
+
+/* =========================================================
+   上方 Chapter / 標籤
+   ========================================================= */
+
+.top {
+  position: absolute;
+
+  z-index: 2;
+
+  top: max(12px, env(safe-area-inset-top));
+  left: 16px;
+  right: 16px;
+
+  padding-top: 2px;
 }
 
 .pill {
-	padding: 6px 10px;
-	border-radius: 99px;
-	background: #0009;
-	font-size: 12px
+  display: inline-block;
+
+  padding: 6px 10px;
+
+  border-radius: 99px;
+
+  background: #0009;
+
+  font-size: 12px;
 }
-.box{
-  position:absolute;
-  z-index:2;
-  left:16px;
-  right:16px;
-  bottom:max(12px,env(safe-area-inset-bottom));
-  max-height:calc(100% - 120px);
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
+
+/* =========================================================
+   下方對話區
+   ========================================================= */
+
+.box {
+  position: absolute;
+
+  z-index: 2;
+
+  left: 16px;
+  right: 16px;
+
+  /*
+   * 避免底部 Home Indicator 擋住按鈕
+   */
+  bottom: max(12px, env(safe-area-inset-bottom));
+
+  /*
+   * 避免整個對話區往上吃掉 Chapter
+   */
+  max-height: calc(100% - 110px);
+
+  /*
+   * Flex 讓 speaker / text / next 正確排列
+   */
+  display: flex;
+  flex-direction: column;
+
+  /*
+   * 很重要：
+   * 允許裡面的文字區縮小
+   */
+  min-height: 0;
 }
+
+/* =========================================================
+   說話者名稱
+   ========================================================= */
 
 .speaker {
-	display: inline-block;
-	padding: 5px 12px;
-	background: #191919f2;
-	border-radius: 5px;
-	font-weight: bold
-}
-.text {
-	min-height: 90px;
-	margin-top: 7px;
-	padding: 14px 15px;
-	border: 1px solid #fff3;
-	border-radius: 10px;
-	background: #000b;
-	line-height: 1.8
-}
-.next,.choice {
-	width: 100%;
-	margin-top: 9px;
-	padding: 13px 15px;
-	border-radius: 9px;
-	background: #ffffff22;
-	border: 1px solid #fff4;
-	text-align: left
-}
-.next {
-	text-align: center
-}
-.choiceScreen {
-	padding: 22px 16px;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	background: #171717
-}
-.choiceTitle {
-	margin-bottom: 14px;
-	font-size: 19px;
-	line-height: 1.65
-}
-.choices {
-	display: grid;
-	gap: 2px
-}
-.cg {
-	background: #000
-}
-.cg img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover
-}
-.hint {
-	position: absolute;
-	right: 14px;
-	bottom: 14px;
-	padding: 7px 10px;
-	border-radius: 99px;
-	background: #0009;
-	font-size: 12px
-}
-.ending {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	padding: 26px;
-	background: linear-gradient(#191919,#050505)
-}
-.ending p {
-	white-space: pre-line;
-	line-height: 1.8;
-	color: #ccc
-}
-.restart {
-	margin-top: 20px;
-	padding: 12px 28px;
-	border-radius: 8px;
-	background: #fff;
-	color: #111
-}
-.error {
-	padding: 30px;
-	background: #120c0c
-}
-.error code {
-	display: block;
-	margin-top: 10px;
-	padding: 10px;
-	background: #000;
-	color: #ffb4b4;
-	white-space: pre-wrap
-}
-#debug {
-	position: absolute;
-	z-index: 10;
-	top: 55px;
-	left: 8px;
-	right: 8px;
-	padding: 7px;
-	background: #000b;
-	border-radius: 6px;
-	font-size: 11px;
-	pointer-events: none
+  display: inline-block;
+
+  /*
+   * 不要讓 speaker 被壓縮
+   */
+  flex-shrink: 0;
+
+  width: fit-content;
+  max-width: 100%;
+
+  padding: 5px 12px;
+
+  background: #191919f2;
+
+  border-radius: 5px;
+
+  font-weight: bold;
 }
 
-.story > *{
-  position:relative;
-  z-index:1;
+/* =========================================================
+   劇情文字
+   ========================================================= */
+
+.text {
+  /*
+   * 讓文字區可以在 flex 裡縮小
+   */
+  min-width: 0;
+  min-height: 90px;
+
+  width: 100%;
+
+  margin-top: 7px;
+
+  padding: 14px 15px;
+
+  border: 1px solid #fff3;
+  border-radius: 10px;
+
+  background: #000b;
+
+  line-height: 1.8;
+
+  /*
+   * 核心修正：
+   *
+   * 文字太多時不要把整個 .box 撐爆，
+   * 而是讓文字框自己捲動。
+   */
+  max-height: clamp(
+    120px,
+    28vh,
+    260px
+  );
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  /*
+   * 避免某些瀏覽器 Flex 計算異常
+   */
+  flex-shrink: 1;
+
+  /*
+   * Firefox
+   */
+  scrollbar-width: thin;
+}
+
+/*
+ * WebKit 瀏覽器的捲軸
+ * Chrome / Safari / Edge
+ */
+.text::-webkit-scrollbar {
+  width: 5px;
+}
+
+.text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.text::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 99px;
+}
+
+/* =========================================================
+   繼續 / 選項按鈕
+   ========================================================= */
+
+.next,
+.choice {
+  /*
+   * 非常重要：
+   * 按鈕永遠不允許被文字區壓縮
+   */
+  flex-shrink: 0;
+
+  width: 100%;
+
+  margin-top: 9px;
+
+  padding: 13px 15px;
+
+  border-radius: 9px;
+
+  background: #ffffff22;
+
+  border: 1px solid #fff4;
+
+  text-align: left;
+}
+
+.next {
+  text-align: center;
+}
+
+/* =========================================================
+   選項畫面
+   ========================================================= */
+
+.choiceScreen {
+  padding: 22px 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  background: #171717;
+}
+
+.choiceTitle {
+  margin-bottom: 14px;
+
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.choices {
+  display: grid;
+  gap: 2px;
+}
+
+.cg {
+  background: #000;
+}
+
+.cg img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* =========================================================
+   CG 提示
+   ========================================================= */
+
+.hint {
+  position: absolute;
+
+  right: 14px;
+  bottom: 14px;
+
+  padding: 7px 10px;
+
+  border-radius: 99px;
+
+  background: #0009;
+
+  font-size: 12px;
+}
+
+/* =========================================================
+   Ending
+   ========================================================= */
+
+.ending {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 26px;
+
+  background: linear-gradient(
+    #191919,
+    #050505
+  );
+}
+
+.ending p {
+  white-space: pre-line;
+
+  line-height: 1.8;
+
+  color: #ccc;
+}
+
+.restart {
+  margin-top: 20px;
+
+  padding: 12px 28px;
+
+  border-radius: 8px;
+
+  background: #fff;
+  color: #111;
+}
+
+/* =========================================================
+   Error
+   ========================================================= */
+
+.error {
+  padding: 30px;
+
+  background: #120c0c;
+}
+
+.error code {
+  display: block;
+
+  margin-top: 10px;
+
+  padding: 10px;
+
+  background: #000;
+
+  color: #ffb4b4;
+
+  white-space: pre-wrap;
+}
+
+/* =========================================================
+   Debug
+   ========================================================= */
+
+#debug {
+  position: absolute;
+
+  z-index: 10;
+
+  top: 55px;
+  left: 8px;
+  right: 8px;
+
+  padding: 7px;
+
+  background: #000b;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   Story 元素層級
+   ========================================================= */
+
+.story > * {
+  position: relative;
+  z-index: 1;
 }
 
 .story .top,
-.story .box{
-  position:absolute;
-  z-index:2;
+.story .box {
+  position: absolute;
+  z-index: 2;
 }
 
-@media (max-height:700px){
-  .dialogue{
-    font-size:15px;
-    line-height:1.65;
+/* =========================================================
+   中等高度手機
+   高度 <= 700px
+   ========================================================= */
+
+@media (max-height: 700px) {
+
+  .dialogue {
+    font-size: 15px;
+    line-height: 1.65;
   }
 
-  .text{
-    padding:11px 13px;
+  .text {
+    /*
+     * 矮螢幕稍微縮小對話框
+     */
+    max-height: 26vh;
+
+    padding: 11px 13px;
   }
 
-  .speaker{
-    padding:4px 10px;
+  .speaker {
+    padding: 4px 10px;
   }
 
   .next,
-  .choice{
-    padding:11px 13px;
+  .choice {
+    padding: 11px 13px;
   }
 
-  .choiceTitle{
-    font-size:17px;
-    line-height:1.5;
+  .choiceTitle {
+    font-size: 17px;
+    line-height: 1.5;
   }
 
-  .choiceScreen{
-    padding:16px 14px;
+  .choiceScreen {
+    padding: 16px 14px;
   }
 }
 
-@media (max-height:560px){
-  .dialogue{
-    font-size:14px;
-    line-height:1.5;
+/* =========================================================
+   很矮的手機
+   高度 <= 560px
+   ========================================================= */
+
+@media (max-height: 560px) {
+
+  .dialogue {
+    font-size: 14px;
+    line-height: 1.5;
   }
 
-  .text{
-    min-height:60px;
-    max-height:32vh;
-    overflow:auto;
+  .text {
+    min-height: 60px;
+
+    /*
+     * 很矮的手機進一步縮小文字區
+     */
+    max-height: 26vh;
+
+    padding: 9px 11px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  .top{
-    left:12px;
-    right:12px;
+  .top {
+    left: 12px;
+    right: 12px;
   }
 
-  .box{
-    left:12px;
-    right:12px;
-    bottom:max(8px,env(safe-area-inset-bottom));
-    max-height:calc(100% - 78px);
+  .box {
+    left: 12px;
+    right: 12px;
+
+    bottom: max(
+      8px,
+      env(safe-area-inset-bottom)
+    );
+
+    /*
+     * 留更多空間給上面的 Chapter
+     */
+    max-height: calc(100% - 78px);
   }
 
-  .speaker{
-    font-size:14px;
+  .speaker {
+    font-size: 14px;
   }
 
   .next,
-  .choice{
-    margin-top:7px;
-    padding:9px 11px;
+  .choice {
+    flex-shrink: 0;
+
+    margin-top: 7px;
+
+    padding: 9px 11px;
+  }
+}
+
+/* =========================================================
+   極窄手機
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+  .box {
+    left: 10px;
+    right: 10px;
+  }
+
+  .text {
+    padding: 9px 10px;
+  }
+
+  .next,
+  .choice {
+    padding: 9px 10px;
   }
 }
