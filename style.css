@@ -363,27 +363,59 @@ button:disabled {
 
 .ending {
   display: flex;
-
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-
+  justify-content: space-between;
   text-align: center;
-
   padding: 26px;
-
+  box-sizing: border-box;
   background: linear-gradient(
     #191919,
     #050505
   );
 }
 
+
 .ending p {
   white-space: pre-line;
-
   line-height: 1.8;
-
   color: #ccc;
+  margin: auto 0;
 }
+
+/* Ending 底部按鈕區 */
+.ending-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.ending-buttons button {
+  flex: 1;
+  max-width: 180px;
+  min-height: 46px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 10px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background .2s ease,
+    transform .15s ease;
+}
+
+.ending-buttons button:hover {
+  background: rgba(255,255,255,.16);
+}
+
+.ending-buttons button:active {
+  transform: scale(.96);
+}
+
 
 .restart {
   margin-top: 20px;
