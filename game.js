@@ -74,7 +74,7 @@ function cg(x) {
 }
 
 function end(x) {
-    A.innerHTML = `<section class="screen ending"><div><h1>${fmt(x.title||"結局")}</h1><p>${fmt(x.text||"")}</p><button class="restart" onclick="restart()">重新開始</button><div class="ending-links"><a class="ending-link"href="https://www.plurk.com/u/star_fall22"target="_blank"rel="noopener"><img src="assets/icon/plurk.png"alt="噗浪"></a><a class="ending-link"href="https://forms.gle/JPThCWhk1pzBziP8A"target="_blank"rel="noopener"><img src="assets/icon/feedback.png"alt="心得與指教"></a></div></div></section>`
+    A.innerHTML = `<section class="screen ending"><div><h1>${fmt(x.title||"結局")}</h1><p>${fmt(x.text||"")}</p><button class="ending-restart" onclick="restart()">重新開始</button><div class="ending-links"><a class="ending-link"href="https://www.plurk.com/u/star_fall22"target="_blank"rel="noopener"><img src="assets/icon/plurk.png"alt="噗浪"></a><a class="ending-link"href="https://forms.gle/JPThCWhk1pzBziP8A"target="_blank"rel="noopener"><img src="assets/icon/feedback.png"alt="心得與指教"></a></div></div></section>`
 }
 
 function restart() {
