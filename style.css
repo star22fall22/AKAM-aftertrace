@@ -362,11 +362,13 @@ button:disabled {
    ========================================================= */
 
 .ending {
+  position: relative;
+
   display: flex;
   flex-direction: column;
 
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   box-sizing: border-box;
   width: 100%;
@@ -388,8 +390,9 @@ button:disabled {
   line-height: 1.8;
   color: #ccc;
 
-  margin: auto 0;
+  margin: 0 0 28px;
 }
+
 
 /* =========================
    重新開始
@@ -416,13 +419,19 @@ button:disabled {
 ========================= */
 
 .ending-links {
+  position: absolute;
+
+  bottom: 20px;
+  left: 0;
+
   display: flex;
+
   justify-content: center;
   align-items: center;
 
-  gap: 22px;
+  width: 100%;
 
-  margin-top: 18px;
+  gap: 22px;
 }
 
 .ending-link {
@@ -433,7 +442,7 @@ button:disabled {
   width: 34px;
   height: 34px;
 
-  opacity: .45;
+  opacity: .75;
 
   cursor: pointer;
 
@@ -449,15 +458,11 @@ button:disabled {
   object-fit: contain;
 }
 
-
-/* 滑鼠移過去才比較明顯 */
 .ending-link:hover {
   opacity: .9;
   transform: translateY(-1px);
 }
 
-
-/* 手機點擊 */
 .ending-link:active {
   opacity: 1;
   transform: scale(.92);
