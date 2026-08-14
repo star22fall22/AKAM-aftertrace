@@ -74,7 +74,7 @@ function cg(x) {
 }
 
 function end(x) {
-    A.innerHTML = `<section class="screen ending"><div><h1>${fmt(x.title||"結局")}</h1><p>${fmt(x.text||"")}</p><button class="restart" onclick="restart()">重新開始</button></div></section>`
+    A.innerHTML = `<section class="screen ending"><div><h1>${fmt(x.title||"結局")}</h1><p>${fmt(x.text||"")}</p><button class="restart" onclick="restart()">重新開始</button><div class="ending-links"><a class="ending-link"href="你的噗浪網址"target="_blank"rel="noopener"><img src="assets/icon/plurk.png"alt="作者噗浪"></a><a class="ending-link"href="你的心得表單網址"target="_blank"rel="noopener"><img src="assets/icon/feedback.png"alt="心得與指教"></a></div></div></section>`
 }
 
 function restart() {
