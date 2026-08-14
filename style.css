@@ -467,7 +467,7 @@ button:disabled {
   opacity: 1;
   transform: scale(.92);
 }
-
+/*
 .restart {
   margin-top: 20px;
 
@@ -477,7 +477,7 @@ button:disabled {
 
   background: #fff;
   color: #111;
-}
+}*/
 
 /* =========================================================
    Error
