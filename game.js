@@ -247,36 +247,54 @@ function fadeOut(audio, duration) {
 
     return new Promise(resolve => {
 
-        if (
-            !audio ||
-            audio.paused ||
-            audio.volume <= 0
-        ) {
-            if (audio) {
-                audio.volume = 0;
-            }
-
+        if (!audio) {
             resolve();
             return;
         }
 
-        const startVolume = audio.volume;
+        const startVolume = Math.max(
+            0,
+            Math.min(1, audio.volume)
+        );
+
+        // 已經沒有聲音
+        if (audio.paused || startVolume <= 0) {
+            audio.volume = 0;
+            resolve();
+            return;
+        }
+
         const startTime = performance.now();
 
         function step(now) {
 
-            const progress = Math.min(
-                (now - startTime) / duration,
-                1
+            // 強制限制在 0 ~ 1
+            const progress = Math.max(
+                0,
+                Math.min(
+                    (now - startTime) / duration,
+                    1
+                )
             );
 
-            audio.volume =
-                startVolume * (1 - progress);
+            // 再次強制限制音量在 0 ~ 1
+            audio.volume = Math.max(
+                0,
+                Math.min(
+                    1,
+                    startVolume * (1 - progress)
+                )
+            );
 
             if (progress >= 1) {
+
+                audio.volume = 0;
                 resolve();
+
             } else {
+
                 requestAnimationFrame(step);
+
             }
         }
 
@@ -298,22 +316,44 @@ function fadeIn(audio, targetVolume, duration) {
             return;
         }
 
+        // 確保目標音量一定在 0 ~ 1
+        targetVolume = Math.max(
+            0,
+            Math.min(1, targetVolume)
+        );
+
+        audio.volume = 0;
+
         const startTime = performance.now();
 
         function step(now) {
 
-            const progress = Math.min(
-                (now - startTime) / duration,
-                1
+            // 強制限制在 0 ~ 1
+            const progress = Math.max(
+                0,
+                Math.min(
+                    (now - startTime) / duration,
+                    1
+                )
             );
 
-            audio.volume =
-                targetVolume * progress;
+            audio.volume = Math.max(
+                0,
+                Math.min(
+                    1,
+                    targetVolume * progress
+                )
+            );
 
             if (progress >= 1) {
+
+                audio.volume = targetVolume;
                 resolve();
+
             } else {
+
                 requestAnimationFrame(step);
+
             }
         }
 
