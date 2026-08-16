@@ -17,7 +17,8 @@
     "gate": {
       "type": "cg",
       "image": "assets/cg/860x1864.jpg",
-      "next": "intro"
+      "next": "intro",
+	  "bgm": null,
     },
     "intro": {
       "type": "story",
