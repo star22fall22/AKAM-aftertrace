@@ -18,7 +18,7 @@
       "type": "cg",
       "image": "assets/cg/860x1864.jpg",
       "next": "intro",
-	  "bgm": null,
+	  "bgm": null
     },
     "intro": {
       "type": "story",
