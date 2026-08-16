@@ -8,8 +8,8 @@ let D = null,
 
 // JSON 裡的 BGM ID 對應實際音檔
 const BGM_FILES = {
-    story01: "assets/bgm/story01.mp3",
-    story02: "assets/bgm/story02.mp3"
+    mystery: "assets/bgm/mystery.mp3",
+    sad: "assets/bgm/sad.mp3"
 };
 
 // BGM 音量：0 ~ 1
