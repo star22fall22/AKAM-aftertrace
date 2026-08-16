@@ -14,7 +14,7 @@
     "是否取得鑰匙": 0
   },
   "nodes": {
-	"gate": {
+    "gate": {
       "type": "cg",
       "image": "assets/cg/860x1864.jpg",
       "next": "intro"
@@ -25,7 +25,8 @@
       "background": "assets/bg/story-bg.svg",
       "speaker": "旁白",
       "text": "夜幕降臨，城市的燈光一盞一盞亮起。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。\n你站在陌生的街道上，不知道接下來該往哪裡走。",
-      "next": "meet"
+      "next": "meet",
+      "bgm": "mystery"
     },
     "meet": {
       "type": "choice",
@@ -70,28 +71,32 @@
           ],
           "next": "leave"
         }
-      ]
+      ],
+      "bgm": "mystery"
     },
     "talk": {
       "type": "story",
       "background": "assets/bg/story-bg-2.svg",
       "speaker": "神秘人物",
       "text": "「你……也是來找那個東西的嗎？」",
-      "next": "key"
+      "next": "key",
+      "bgm": "mystery"
     },
     "observe": {
       "type": "story",
       "background": "assets/bg/story-bg-3.svg",
       "speaker": "旁白",
       "text": "你先觀察四周。她似乎因此多了一分戒心。",
-      "next": "key"
+      "next": "key",
+      "bgm": "mystery"
     },
     "leave": {
       "type": "story",
       "background": "assets/bg/story-bg-3.svg",
       "speaker": "旁白",
       "text": "你轉身離開，但身後似乎傳來一聲輕笑。",
-      "next": "key"
+      "next": "key",
+      "bgm": "mystery"
     },
     "key": {
       "type": "choice",
@@ -124,7 +129,8 @@
           ],
           "next": "check"
         }
-      ]
+      ],
+      "bgm": "mystery"
     },
     "check": {
       "type": "story",
@@ -151,41 +157,48 @@
           }
         ],
         "default": "normal"
-      }
+      },
+      "bgm": "sad"
     },
     "high": {
       "type": "cg",
       "image": "assets/cg/cg-01.svg",
-      "next": "good"
+      "next": "good",
+      "bgm": "sad"
     },
     "normal": {
       "type": "story",
       "background": "assets/bg/story-bg-2.svg",
       "speaker": "神秘人物",
       "text": "「我還不知道能不能完全相信你。」",
-      "next": "normalEnd"
+      "next": "normalEnd",
+      "bgm": "sad"
     },
     "low": {
       "type": "story",
       "background": "assets/bg/story-bg-3.svg",
       "speaker": "神秘人物",
       "text": "「我果然不應該相信你。」",
-      "next": "badEnd"
+      "next": "badEnd",
+      "bgm": "sad"
     },
     "good": {
       "type": "ending",
       "title": "特別結局・信任",
-      "text": "你們建立了足夠的信任。"
+      "text": "你們建立了足夠的信任。",
+      "bgm": "sad"
     },
     "normalEnd": {
       "type": "ending",
       "title": "普通結局",
-      "text": "你們仍然繼續同行。"
+      "text": "你們仍然繼續同行。",
+      "bgm": "sad"
     },
     "badEnd": {
       "type": "ending",
       "title": "分歧結局・離去",
-      "text": "彼此失去了信任。"
+      "text": "彼此失去了信任。",
+      "bgm": "sad"
     }
   }
 }
