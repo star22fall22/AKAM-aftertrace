@@ -145,6 +145,79 @@ button:disabled {
 }
 
 /* =========================================================
+   右上角音樂開關
+   與左上角 Chapter 使用相同 pill 風格
+   ========================================================= */
+
+.music-toggle {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 42px;
+  height: 28px;
+
+  padding: 6px 10px;
+
+  border-radius: 99px;
+
+  background: #0009;
+
+  border: 0;
+
+  font-size: 13px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
+
+  transition:
+    background .2s ease,
+    transform .1s ease;
+}
+
+.music-toggle:hover {
+  background: #000b;
+}
+
+.music-toggle:active {
+  transform: scale(.94);
+}
+
+.screen-top-right {
+  position: absolute;
+
+  z-index: 5;
+
+  top: max(12px, env(safe-area-inset-top));
+  right: 16px;
+
+  padding-top: 2px;
+}
+
+.top {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.top .music-toggle {
+  margin-left: auto;
+}
+
+/* 矮手機與 Chapter 的左右邊距保持一致 */
+@media (max-height: 560px) {
+  .screen-top-right {
+    right: 12px;
+  }
+}
+
+/* =========================================================
    下方對話區
    ========================================================= */
 
