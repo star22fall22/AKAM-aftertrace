@@ -640,7 +640,7 @@ function musicButtonHtml() {
         >${
             musicEnabled
                 ? "♫"
-                : "♩̸"
+                : "▶︎"
         }</button>
     `;
 }
@@ -659,7 +659,7 @@ function updateMusicButtons() {
             btn.innerHTML =
                 musicEnabled
                     ? "♫"
-                    : "♩̸";
+                    : "▶︎";
 
             btn.setAttribute(
                 "aria-label",
