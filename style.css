@@ -1,9 +1,9 @@
 /* =========================================================
-   通用情境色彩變數
+   通用情境色彩變數（淺色系版本）
    核心：白 / 主粉（品牌色，不變）
    延伸：米膚 / 薰灰 / 玫瑰灰 / 深梅紫（通用情境色）
-   若未來要做「溫馨 / 沉重」動態變色，
-   只需在 :root 或 [data-mood="..."] 覆寫以下變數即可。
+   淺色模式下，深梅紫改作為主要文字色，
+   疊層改為霧面白卡片，維持在任意 CG 圖片上的可讀性。
    ========================================================= */
 
 :root {
@@ -17,30 +17,37 @@
   --color-rose:  #B98CA0;
   --color-plum:  #5C3A4D;
 
-  /* 底色（由深梅紫延伸出的深色，取代純黑/純灰） */
-  --bg-base:  #1B1218;
-  --bg-game:  #150E13;
-  --bg-panel: #201720;
-  --bg-deep:  #0D0810;
+  /* 底色（淺色系：以米膚 / 薰灰為主，取代原本的深灰黑） */
+  --bg-body:  #EFE1E7;   /* 桌面版遊戲框外側背景 */
+  --bg-base:  var(--color-ivory);
+  --bg-game:  var(--color-ivory);
+  --bg-panel: var(--color-lilac);
+  --bg-ending-start: #FDF8F6;
+  --bg-ending-end:   var(--color-lilac);
 
-  /* 疊層（取代原本的 #0009 / #000b 等純黑透明） */
-  --overlay-dark:        rgba(27, 18, 24, 0.75);
-  --overlay-dark-strong: rgba(20, 13, 18, 0.92);
+  /* 疊層（取代原本的 #000 系半透明黑，改為霧面白卡片） */
+  --overlay-light:        rgba(255, 255, 255, 0.86);
+  --overlay-light-strong: rgba(255, 255, 255, 0.96);
+  --overlay-blur: 10px;
 
-  /* 按鈕：以主粉做低飽和疊層，維持可讀性同時帶出品牌感 */
-  --overlay-pink-soft:   rgba(247, 84, 184, 0.14);
-  --overlay-pink-border: rgba(247, 84, 184, 0.45);
-  --overlay-pink-strong: rgba(247, 84, 184, 0.32);
+  /* 按鈕：白底 + 主粉邊框，hover 時粉色疊層加強 */
+  --overlay-pink-soft:   rgba(247, 84, 184, 0.10);
+  --overlay-pink-border: rgba(247, 84, 184, 0.55);
+  --overlay-pink-strong: rgba(247, 84, 184, 0.22);
 
-  /* 邊框 / 文字 */
-  --border-soft:   rgba(232, 220, 226, 0.25);
-  --text-primary:  var(--color-white);
-  --text-secondary: var(--color-lilac);
-  --text-muted:    #C7AFBC;
+  /* 邊框 / 文字（改用深梅紫系，取代白色系文字） */
+  --border-soft: rgba(92, 58, 77, 0.16);
+  --text-primary:   var(--color-plum);
+  --text-secondary: #7A5468;
+  --text-muted:     #A9808F;
+
+  /* 陰影：以深梅紫取代純黑陰影，維持淺色系的柔和感 */
+  --shadow-soft:   0 4px 16px rgba(92, 58, 77, 0.14);
+  --shadow-strong: 0 0 40px rgba(92, 58, 77, 0.28);
 
   /* 功能色：警示/錯誤刻意跳脫主色系，維持辨識度 */
-  --accent-warning: #FF8A7A;
-  --bg-warning:     #1A0E0E;
+  --accent-warning: #C43A2E;
+  --bg-warning:     #FCEAE8;
 }
 
 * {
@@ -54,7 +61,7 @@ body {
   height: 100%;
   min-height: 100%;
   overflow: hidden;
-  background: var(--bg-base);
+  background: var(--bg-body);
   color: var(--text-primary);
   font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
 }
@@ -108,7 +115,7 @@ body {
     height: min(932px, calc(100vw * 932 / 430));
 
     border-radius: 8px;
-    box-shadow: 0 0 40px rgba(13, 8, 16, 0.8);
+    box-shadow: var(--shadow-strong);
   }
 }
 
@@ -146,6 +153,12 @@ button:disabled {
   background-position: center;
 }
 
+/*
+ * 淺色系關鍵調整：
+ * 原本是「往下漸深的黑色」，用來讓白字在任何 CG 上都可讀。
+ * 現在改成「往下漸強的白霧」，維持深色文字在任何 CG 上都可讀，
+ * 邏輯對調但效果等價。
+ */
 .story::after {
   content: "";
 
@@ -154,8 +167,8 @@ button:disabled {
 
   background: linear-gradient(
     to bottom,
-    transparent 35%,
-    var(--overlay-dark-strong)
+    transparent 30%,
+    var(--overlay-light-strong)
   );
 
   pointer-events: none;
@@ -184,9 +197,14 @@ button:disabled {
 
   border-radius: 99px;
 
-  background: var(--overlay-dark);
+  background: var(--overlay-light);
+  box-shadow: var(--shadow-soft);
+
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
 
   font-size: 12px;
+  color: var(--text-primary);
 }
 
 /* =========================================================
@@ -207,12 +225,17 @@ button:disabled {
 
   border-radius: 99px;
 
-  background: var(--overlay-dark);
+  background: var(--overlay-light);
+  box-shadow: var(--shadow-soft);
+
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
 
   border: 0;
 
   font-size: 13px;
   line-height: 1;
+  color: var(--text-primary);
 
   cursor: pointer;
 
@@ -224,7 +247,7 @@ button:disabled {
 }
 
 .music-toggle:hover {
-  background: var(--overlay-dark-strong);
+  background: var(--overlay-light-strong);
 }
 
 .music-toggle:active {
@@ -314,11 +337,13 @@ button:disabled {
 
   padding: 5px 12px;
 
-  background: var(--overlay-dark-strong);
+  background: var(--overlay-light-strong);
+  box-shadow: var(--shadow-soft);
 
   border-radius: 5px;
 
   font-weight: bold;
+  color: var(--color-pink);
 }
 
 /* =========================================================
@@ -341,9 +366,14 @@ button:disabled {
   border: 1px solid var(--border-soft);
   border-radius: 10px;
 
-  background: var(--overlay-dark);
+  background: var(--overlay-light);
+  box-shadow: var(--shadow-soft);
+
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
 
   line-height: 1.8;
+  color: var(--text-primary);
 
   /*
    * 核心修正：
@@ -408,11 +438,15 @@ button:disabled {
 
   border-radius: 9px;
 
-  background: var(--overlay-pink-soft);
+  background: var(--overlay-light-strong);
 
   border: 1px solid var(--overlay-pink-border);
+  box-shadow: var(--shadow-soft);
 
   text-align: left;
+  color: var(--text-primary);
+
+  transition: background .2s ease, transform .1s ease;
 }
 
 .next:hover,
@@ -420,8 +454,15 @@ button:disabled {
   background: var(--overlay-pink-strong);
 }
 
+.next:active,
+.choice:active {
+  transform: scale(.98);
+}
+
 .next {
   text-align: center;
+  font-weight: 600;
+  color: var(--color-pink);
 }
 
 /* =========================================================
@@ -443,6 +484,7 @@ button:disabled {
 
   font-size: 19px;
   line-height: 1.65;
+  color: var(--text-primary);
 }
 
 .choices {
@@ -451,7 +493,7 @@ button:disabled {
 }
 
 .cg {
-  background: var(--bg-game);
+  background: var(--color-lilac);
 }
 
 .cg img {
@@ -475,9 +517,14 @@ button:disabled {
 
   border-radius: 99px;
 
-  background: var(--overlay-dark);
+  background: var(--overlay-light);
+  box-shadow: var(--shadow-soft);
+
+  -webkit-backdrop-filter: blur(var(--overlay-blur));
+  backdrop-filter: blur(var(--overlay-blur));
 
   font-size: 12px;
+  color: var(--text-primary);
 }
 
 /* =========================================================
@@ -503,8 +550,8 @@ button:disabled {
   text-align: center;
 
   background: linear-gradient(
-    var(--bg-panel),
-    var(--bg-deep)
+    var(--bg-ending-start),
+    var(--bg-ending-end)
   );
 }
 
@@ -534,17 +581,19 @@ button:disabled {
 
   padding: 10px 16px;
 
-  border: 1px solid var(--border-soft);
+  border: 1px solid var(--overlay-pink-border);
   border-radius: 10px;
 
-  background: var(--overlay-dark);
-  color: var(--text-secondary);
+  background: var(--overlay-light-strong);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-pink);
 
   font-size: 15px;
+  font-weight: 600;
 }
 
 .ending-restart:hover {
-  background: var(--overlay-dark-strong);
+  background: var(--overlay-pink-strong);
 }
 
 /* =========================
@@ -576,7 +625,7 @@ button:disabled {
   width: 34px;
   height: 34px;
 
-  opacity: .75;
+  opacity: .8;
 
   cursor: pointer;
 
@@ -593,7 +642,7 @@ button:disabled {
 }
 
 .ending-link:hover {
-  opacity: .9;
+  opacity: 1;
   transform: translateY(-1px);
 }
 
@@ -601,18 +650,6 @@ button:disabled {
   opacity: 1;
   transform: scale(.92);
 }
-
-/*
-.restart {
-  margin-top: 20px;
-
-  padding: 12px 28px;
-
-  border-radius: 8px;
-
-  background: #fff;
-  color: #111;
-}*/
 
 /* =========================================================
    Error
@@ -632,7 +669,7 @@ button:disabled {
 
   padding: 10px;
 
-  background: var(--bg-deep);
+  background: #FFFFFF;
 
   color: var(--accent-warning);
 
@@ -654,11 +691,13 @@ button:disabled {
 
   padding: 7px;
 
-  background: var(--overlay-dark);
+  background: var(--overlay-light);
+  box-shadow: var(--shadow-soft);
 
   border-radius: 6px;
 
   font-size: 11px;
+  color: var(--text-primary);
 
   pointer-events: none;
 }
